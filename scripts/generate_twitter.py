@@ -83,19 +83,43 @@ def generate_twitter_thread():
 
     return "\n\n---\n\n".join(thread)
 
+def generate_daily_tweet():
+    """生成每日简短推文"""
+    return f"""📊 AI API 价格监控 {datetime.now().strftime('%m/%d')}
+
+今日最佳: GPT-4o-mini @ OpenRouter
+💸 比官方便宜 94%
+
+实时数据 → https://huangcaopoxiao.github.io/ai-arbitrage-insights/
+
+#AI #API #OpenRouter #省钱 👑"""
+
 def save_content():
     CONTENT_PATH.mkdir(exist_ok=True)
     
+    # 生成线程
     thread = generate_twitter_thread()
     timestamp = datetime.now().strftime("%Y%m%d-%H%M")
     
-    filepath = CONTENT_PATH / f"twitter-thread-{timestamp}.txt"
-    with open(filepath, "w") as f:
+    thread_filepath = CONTENT_PATH / f"twitter-thread-{timestamp}.txt"
+    with open(thread_filepath, "w") as f:
         f.write(thread)
     
-    print(f"✅ Twitter 线程已保存: {filepath}")
+    # 生成每日推文
+    daily = generate_daily_tweet()
+    daily_filepath = CONTENT_PATH / f"twitter-daily-{timestamp}.txt"
+    with open(daily_filepath, "w") as f:
+        f.write(daily)
+    
+    print(f"✅ Twitter 内容已生成:")
+    print(f"  - 线程: {thread_filepath}")
+    print(f"  - 日推: {daily_filepath}")
     print("\n" + "="*50)
-    print(thread)
+    print("【每日推文】")
+    print(daily)
+    print("\n" + "="*50)
+    print("【线程预览】")
+    print(thread[:500] + "...")
     print("="*50)
 
 if __name__ == "__main__":
