@@ -1,0 +1,68 @@
+{
+  "timestamp": "2026-02-15T17:38:51.475957",
+  "total_models": 340,
+  "cheapest_models": [
+    {
+      "id": "liquid/lfm2-8b-a1b",
+      "input": 0.01
+    },
+    {
+      "id": "liquid/lfm-2.2-6b",
+      "input": 0.01
+    },
+    {
+      "id": "ibm-granite/granite-4.0-h-micro",
+      "input": 0.02
+    },
+    {
+      "id": "google/gemma-3-4b-it",
+      "input": 0.02
+    },
+    {
+      "id": "google/gemma-3n-e4b-it",
+      "input": 0.02
+    },
+    {
+      "id": "nousresearch/deephermes-3-mistral-24b-preview",
+      "input": 0.02
+    },
+    {
+      "id": "meta-llama/llama-guard-3-8b",
+      "input": 0.02
+    },
+    {
+      "id": "meta-llama/llama-3.2-3b-instruct",
+      "input": 0.02
+    },
+    {
+      "id": "meta-llama/llama-3.1-8b-instruct",
+      "input": 0.02
+    },
+    {
+      "id": "mistralai/mistral-nemo",
+      "input": 0.02
+    }
+  ],
+  "most_expensive": [
+    {
+      "id": "openai/o1-pro",
+      "input": 150.0
+    },
+    {
+      "id": "openai/gpt-4-0314",
+      "input": 30.0
+    },
+    {
+      "id": "openai/gpt-4",
+      "input": 30.0
+    },
+    {
+      "id": "openai/gpt-5.2-pro",
+      "input": 21.0
+    },
+    {
+      "id": "openai/o3-pro",
+      "input": 20.0
+    }
+  ]
+}
