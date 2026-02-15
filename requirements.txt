@@ -1,0 +1,5 @@
+requests
+httpx
+websockets
+python-dotenv
+schedule

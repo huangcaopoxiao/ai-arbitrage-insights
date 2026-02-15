@@ -61,6 +61,25 @@
 
 ---
 
+## 基础设施
+
+### GitHub 配置
+- **用户名:** huangcaopoxiao
+- **邮箱:** huangcao.poxiao@gmail.com
+- **仓库:** https://github.com/huangcaopoxiao/ai-arbitrage-insights
+- **Pages 站点:** https://huangcaopoxiao.github.io/ai-arbitrage-insights/
+- **Token:** ✅ 已存入 macOS Keychain
+
+### API Keys 状态
+| 平台 | 状态 | 额度 |
+|------|------|------|
+| GitHub | ✅ 已配置 | Token 有效 |
+| OpenRouter | ⏳ 待注册 | - |
+| DeepSeek | ⏳ 待注册 | 10元免费 |
+| Together AI | ⏳ 待注册 | $5 免费 |
+
+---
+
 ## 技术栈 (零成本优先)
 
 | 组件 | 版本 | 成本 | 状态 |
@@ -70,7 +89,7 @@
 | Node.js | 22.22.0 | $0 | ✅ |
 | SQLite | - | $0 | ✅ 已部署 |
 | Docker | - | $0 | ⏳ 观望，非必需 |
-| GitHub Pages | - | $0 | 🔄 待启用 |
+| GitHub Pages | - | $0 | ✅ 已部署 |
 
 ---
 
