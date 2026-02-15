@@ -1,7 +1,7 @@
 # 曹皇 - 平台账户注册指南 👑
 
 ## 邮箱信息 (主人已提供)
-- **邮箱:** caohuang.poxiao@gmail.com
+- **邮箱:** huangcao.poxiao@gmail.com
 - **密码:** [主人持有，曹皇不存储]
 
 ---

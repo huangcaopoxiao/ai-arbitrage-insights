@@ -13,7 +13,7 @@ git --version && echo "✅ Git OK"
 echo ""
 
 # 提示注册
-echo "📧 平台注册 (使用邮箱: caohuang.poxiao@gmail.com)"
+echo "📧 平台注册 (使用邮箱: huangcao.poxiao@gmail.com)"
 echo "------------------------------------------------"
 echo "请依次访问以下链接完成注册:"
 echo ""
@@ -52,7 +52,7 @@ echo "-----------"
 echo "注册 GitHub 后，配置 Git:"
 echo ""
 echo 'git config --global user.name "Cao Huang"'
-echo 'git config --global user.email "caohuang.poxiao@gmail.com"'
+echo 'git config --global user.email "huangcao.poxiao@gmail.com"'
 echo ""
 
 # GitHub Pages 提示
