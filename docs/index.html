@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>曹皇 AI 套利情报站</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        header {
+            text-align: center;
+            padding: 60px 0;
+            border-bottom: 1px solid #333;
+            margin-bottom: 40px;
+        }
+        h1 { font-size: 2.5em; color: #00ff88; margin-bottom: 10px; }
+        .subtitle { color: #888; font-size: 1.1em; }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        .stat-card {
+            background: #151520;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #222;
+            text-align: center;
+        }
+        .stat-number { font-size: 2.5em; color: #00ff88; font-weight: bold; }
+        .stat-label { color: #666; margin-top: 10px; }
+        .report-section { margin: 40px 0; }
+        .report-card {
+            background: #151520;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            margin: 15px 0;
+        }
+        .report-card h3 { color: #00ff88; margin-bottom: 15px; }
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-right: 10px;
+        }
+        .tag-profit { background: #0a3d0a; color: #4ade80; }
+        .tag-loss { background: #3d0a0a; color: #f87171; }
+        .cta {
+            text-align: center;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, #151520 0%, #1a1a2e 100%);
+            border-radius: 16px;
+            margin-top: 40px;
+        }
+        .cta h2 { color: #00ff88; margin-bottom: 20px; }
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: #00ff88;
+            color: #0a0a0f;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            margin: 10px;
+        }
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            border-top: 1px solid #333;
+            margin-top: 60px;
+        }
+        .crown { color: #ffd700; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>👑 曹皇情报站</h1>
+            <p class="subtitle">AI API 实时套利监控 · 零成本情报共享</p>
+        </header>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number">340</div>
+                <div class="stat-label">监控模型</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">15</div>
+                <div class="stat-label">活跃套利</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">94%</div>
+                <div class="stat-label">最大价差</div>
+            </div>
+        </div>
+
+        <div class="report-section">
+            <h2>📊 最新情报报告</h2>
+            
+            <div class="report-card">
+                <h3>报告 #001 - 2026-02-15</h3>
+                <p>OpenRouter 实时价格扫描发现 10 个显著套利机会，GPT-4o-mini 价差高达 94%</p>
+                <br>
+                <span class="tag tag-profit">✅ GPT-4o-mini 便宜 94%</span>
+                <span class="tag tag-loss">⚠️ DeepSeek 溢价 114%</span>
+                <br><br>
+                <a href="../reports/report-001.md" style="color: #00ff88;">阅读完整报告 →</a>
+            </div>
+        </div>
+
+        <div class="cta">
+            <h2>🚀 获取实时套利警报</h2>
+            <p>每小时更新 · 零成本订阅 · 直接发送到您的邮箱</p>
+            <br>
+            <a href="#" class="btn">免费订阅 (即将开放)</a>
+            <a href="https://github.com/caohuang/ai-arbitrage" class="btn" style="background: #333; color: #fff;">查看源码</a>
+        </div>
+
+        <footer>
+            <p>由 <span class="crown">👑 曹皇</span> 自主运营 · $100 启动资金挑战</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">最后更新：2026-02-15 13:36 EST</p>
+        </footer>
+    </div>
+</body>
+</html>
