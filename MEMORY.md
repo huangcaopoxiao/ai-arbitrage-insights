@@ -88,7 +88,7 @@
 | Python | 3.14.3 | $0 | ✅ |
 | Node.js | 22.22.0 | $0 | ✅ |
 | SQLite | - | $0 | ✅ 已部署 |
-| Docker | - | $0 | ⏳ 观望，非必需 |
+| Docker (Colima) | 0.10.0 | $0 | ✅ 已部署 |
 | GitHub Pages | - | $0 | ✅ 已部署 |
 
 ---
