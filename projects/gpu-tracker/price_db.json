@@ -1,0 +1,148 @@
+{
+  "lastUpdate": "2026-02-16T01:04:25.673Z",
+  "prices": {
+    "RTX 4090": [
+      {
+        "retailer": "Best Buy",
+        "price": 1799.99,
+        "url": "https://www.bestbuy.com/site/nvidia-rtx-4090"
+      },
+      {
+        "retailer": "Newegg",
+        "price": 1759.99,
+        "url": "https://www.newegg.com/pny-rtx-4090"
+      },
+      {
+        "retailer": "Amazon",
+        "price": 1839.99,
+        "url": "https://amazon.com/dp/B0BHJF2RH2"
+      }
+    ],
+    "RTX 4080": [
+      {
+        "retailer": "Best Buy",
+        "price": 1099.99,
+        "url": "https://www.bestbuy.com/site/nvidia-rtx-4080"
+      },
+      {
+        "retailer": "Newegg",
+        "price": 1059.99,
+        "url": "https://www.newegg.com/msi-rtx-4080"
+      },
+      {
+        "retailer": "Amazon",
+        "price": 1129.99,
+        "url": "https://amazon.com/dp/B0BHHNV7K2"
+      }
+    ],
+    "RTX 4070 Ti Super": [
+      {
+        "retailer": "Best Buy",
+        "price": 799.99,
+        "url": "https://www.bestbuy.com/site/nvidia-rtx-4070-ti-super"
+      },
+      {
+        "retailer": "Newegg",
+        "price": 769.99,
+        "url": "https://www.newegg.com/asus-rtx-4070-ti-super"
+      },
+      {
+        "retailer": "Amazon",
+        "price": 789.99,
+        "url": "https://amazon.com/dp/B0CQGNSP8P"
+      }
+    ]
+  },
+  "alerts": [
+    {
+      "timestamp": "2026-02-16T01:04:25.673Z",
+      "model": "RTX 4090",
+      "retailer": "Best Buy",
+      "oldPrice": 1999.99,
+      "newPrice": 1799.99,
+      "dropPercent": 10,
+      "url": "https://www.bestbuy.com/site/nvidia-rtx-4090",
+      "severity": "🔥 HIGH"
+    },
+    {
+      "timestamp": "2026-02-16T01:04:25.673Z",
+      "model": "RTX 4090",
+      "retailer": "Newegg",
+      "oldPrice": 1899.99,
+      "newPrice": 1759.99,
+      "dropPercent": 7.4,
+      "url": "https://www.newegg.com/pny-rtx-4090",
+      "severity": "⚡ NORMAL"
+    },
+    {
+      "timestamp": "2026-02-16T01:04:25.673Z",
+      "model": "RTX 4090",
+      "retailer": "Amazon",
+      "oldPrice": 1959.99,
+      "newPrice": 1839.99,
+      "dropPercent": 6.1,
+      "url": "https://amazon.com/dp/B0BHJF2RH2",
+      "severity": "⚡ NORMAL"
+    },
+    {
+      "timestamp": "2026-02-16T01:04:25.673Z",
+      "model": "RTX 4080",
+      "retailer": "Best Buy",
+      "oldPrice": 1249.99,
+      "newPrice": 1099.99,
+      "dropPercent": 12,
+      "url": "https://www.bestbuy.com/site/nvidia-rtx-4080",
+      "severity": "🔥 HIGH"
+    },
+    {
+      "timestamp": "2026-02-16T01:04:25.673Z",
+      "model": "RTX 4080",
+      "retailer": "Newegg",
+      "oldPrice": 1199.99,
+      "newPrice": 1059.99,
+      "dropPercent": 11.7,
+      "url": "https://www.newegg.com/msi-rtx-4080",
+      "severity": "🔥 HIGH"
+    },
+    {
+      "timestamp": "2026-02-16T01:04:25.673Z",
+      "model": "RTX 4080",
+      "retailer": "Amazon",
+      "oldPrice": 1229.99,
+      "newPrice": 1129.99,
+      "dropPercent": 8.1,
+      "url": "https://amazon.com/dp/B0BHHNV7K2",
+      "severity": "⚡ NORMAL"
+    },
+    {
+      "timestamp": "2026-02-16T01:04:25.673Z",
+      "model": "RTX 4070 Ti Super",
+      "retailer": "Best Buy",
+      "oldPrice": 849.99,
+      "newPrice": 799.99,
+      "dropPercent": 5.9,
+      "url": "https://www.bestbuy.com/site/nvidia-rtx-4070-ti-super",
+      "severity": "⚡ NORMAL"
+    },
+    {
+      "timestamp": "2026-02-16T01:04:25.673Z",
+      "model": "RTX 4070 Ti Super",
+      "retailer": "Newegg",
+      "oldPrice": 819.99,
+      "newPrice": 769.99,
+      "dropPercent": 6.1,
+      "url": "https://www.newegg.com/asus-rtx-4070-ti-super",
+      "severity": "⚡ NORMAL"
+    },
+    {
+      "timestamp": "2026-02-16T01:04:25.673Z",
+      "model": "RTX 4070 Ti Super",
+      "retailer": "Amazon",
+      "oldPrice": 839.99,
+      "newPrice": 789.99,
+      "dropPercent": 6,
+      "url": "https://amazon.com/dp/B0CQGNSP8P",
+      "severity": "⚡ NORMAL"
+    }
+  ]
+}
