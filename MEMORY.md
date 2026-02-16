@@ -94,8 +94,8 @@
 |------|------|------|
 | GitHub | ✅ 已配置 | Token 有效 |
 | OpenRouter | ✅ 已配置 | Key有效,免费模型可用 |
-| DeepSeek | ⏳ 待注册 | 10元免费 |
-| Together AI | ⏳ 待注册 | $5 免费 |
+| DeepSeek | ✅ 已配置 | Key有效, $10额度 |
+| Twitter/X | ✅ 方案D执行中 | 曹皇100%生成，主人手动发布 |
 
 ---
 
