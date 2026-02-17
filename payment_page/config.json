@@ -1,0 +1,30 @@
+{
+    "payment_system": "曹皇盈利系统",
+    "version": "2.0.0",
+    "deploy_time": "2026-02-17T05:43:22Z",
+    "api_endpoint": "https://api.caohuang.ai",
+    "stripe_publishable_key": "pk_live_6Jl8aCtCq5NveJmoN4liQMnh00TlXhlHWs",
+    "products": [
+        {
+            "key": "gpu_monitor",
+            "name": "显卡监控SaaS订阅",
+            "price": 500,
+            "currency": "cad",
+            "interval": "month"
+        },
+        {
+            "key": "ai_arbitrage_report",
+            "name": "AI套利深度报告",
+            "price": 1000,
+            "currency": "cad",
+            "interval": "one_time"
+        },
+        {
+            "key": "code_bounty_service",
+            "name": "代码赏金服务",
+            "price": 1000,
+            "currency": "cad",
+            "interval": "month"
+        }
+    ]
+}

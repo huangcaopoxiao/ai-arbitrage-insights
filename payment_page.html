@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>曹皇盈利系统 - 支付页面</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #27ae60;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: none;
+        }
+        
+        .product-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+        
+        .product-card.selected {
+            border: 3px solid var(--secondary-color);
+            background-color: rgba(52, 152, 219, 0.05);
+        }
+        
+        .price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .currency {
+            font-size: 1.5rem;
+            color: #666;
+        }
+        
+        .btn-pay {
+            background: linear-gradient(135deg, var(--secondary-color), #2980b9);
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+        
+        .btn-pay:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.3);
+        }
+        
+        .feature-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .status-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .status-active {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .loading {
+            display: none;
+        }
+        
+        .loading.active {
+            display: block;
+        }
+        
+        .payment-success {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <!-- Header -->
+                <div class="text-center mb-5">
+                    <h1 class="text-white display-4 fw-bold mb-3">👑 曹皇盈利系统</h1>
+                    <p class="text-white lead mb-4">24/7 AI自动化盈利引擎 - 立即订阅，立即盈利</p>
+                    <div class="badge bg-light text-dark p-2 mb-3">
+                        <span class="me-2">💰</span>
+                        <span>安全支付 · 实时激活 · 零风险订阅</span>
+                    </div>
+                </div>
+
+                <!-- Products -->
+                <div class="row g-4 mb-5" id="products-container">
+                    <!-- Products will be loaded dynamically -->
+                </div>
+
+                <!-- Payment Form -->
+                <div class="card p-4 mb-4" id="payment-form" style="display: none;">
+                    <h3 class="mb-4">💳 支付信息</h3>
+                    
+                    <div class="mb-4">
+                        <label class="form-label">选择的产品</label>
+                        <div class="alert alert-info" id="selected-product-info">
+                            <!-- Selected product info will be shown here -->
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="email" class="form-label">邮箱地址 *</label>
+                        <input type="email" class="form-control form-control-lg" id="email" 
+                               placeholder="your@email.com" required>
+                        <div class="form-text">支付确认和产品激活链接将发送到此邮箱</div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label">支付方式</label>
+                        <div class="alert alert-warning">
+                            <div class="d-flex align-items-center">
+                                <div class="me-3">🔒</div>
+                                <div>
+                                    <strong>安全支付</strong><br>
+                                    通过Stripe安全支付处理，支持所有主要信用卡
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-pay btn-lg text-white" id="pay-button">
+                            <span id="pay-text">立即支付</span>
+                            <span id="pay-loading" class="loading">
+                                <span class="spinner-border spinner-border-sm me-2"></span>
+                                处理中...
+                            </span>
+                        </button>
+                        <button class="btn btn-outline-secondary btn-lg" id="back-button">
+                            ← 返回选择产品
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Payment Success -->
+                <div class="card p-5 text-center" id="payment-success" style="display: none;">
+                    <div class="mb-4">
+                        <div class="display-1 text-success mb-3">✅</div>
+                        <h2 class="text-success mb-3">支付成功！</h2>
+                        <p class="lead mb-4">感谢您的订阅！产品激活链接已发送到您的邮箱。</p>
+                    </div>
+                    
+                    <div class="alert alert-success mb-4">
+                        <h5 class="alert-heading">下一步操作</h5>
+                        <ol class="text-start mb-0">
+                            <li>检查您的邮箱（包括垃圾邮件文件夹）</li>
+                            <li>点击邮件中的激活链接</li>
+                            <li>登录您的账户开始使用服务</li>
+                            <li>如有问题，请联系 support@caohuang.ai</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="d-grid gap-2 col-lg-6 mx-auto">
+                        <button class="btn btn-outline-primary btn-lg" id="new-payment-button">
+                            💰 继续购买其他产品
+                        </button>
+                        <a href="https://huangcaopoxiao.github.io/ai-arbitrage-insights/" 
+                           class="btn btn-outline-secondary btn-lg">
+                            🏠 返回首页
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Features -->
+                <div class="card p-4 mt-4">
+                    <h4 class="mb-4">✨ 为什么选择曹皇盈利系统？</h4>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="d-flex align-items-start">
+                                <div class="me-3 display-6">🤖</div>
+                                <div>
+                                    <h5>完全自动化</h5>
+                                    <p class="text-muted mb-0">24/7 AI驱动，零人工干预</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="d-flex align-items-start">
+                                <div class="me-3 display-6">🔒</div>
+                                <div>
+                                    <h5>资金安全</h5>
+                                    <p class="text-muted mb-0">Stripe安全支付，无法提现退款</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="d-flex align-items-start">
+                                <div class="me-3 display-6">📈</div>
+                                <div>
+                                    <h5>实时盈利</h5>
+                                    <p class="text-muted mb-0">支付后立即激活，立即开始盈利</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="text-center mt-5 text-white">
+                    <p class="mb-2">
+                        <small>© 2026 曹皇盈利系统 · 由AI驱动的24/7自动化盈利引擎</small>
+                    </p>
+                    <p class="mb-0">
+                        <small>
+                            <a href="https://github.com/huangcaopoxiao/ai-arbitrage-insights" class="text-white text-decoration-underline me-3">GitHub</a>
+                            <a href="#" class="text-white text-decoration-underline me-3">服务条款</a>
+                            <a href="#" class="text-white text-decoration-underline">隐私政策</a>
+                        </small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const API_BASE_URL = 'https://api.caohuang.ai';
+        const API_KEY = 'CAOHUANG_PROFIT_SYSTEM_2026';
+        
+        // State
+        let selectedProduct = null;
+        let stripe = null;
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProducts();
+            setupEventListeners();
+        });
+        
+        // Load products from API
+        async function loadProducts() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/products`, {
+                    headers: {
+                        'X-API-Key': API_KEY
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to load products');
+                }
+                
+                const products = await response.json();
+                renderProducts(products);
+            } catch (error) {
+                console.error('Error loading products:', error);
+                // Fallback to default products
+                renderProducts(getDefaultProducts());
+            }
+        }
+        
+        // Default products (fallback)
+        function getDefaultProducts() {
+            return [
+                {
+                    key: 'gpu_monitor',
+                    name: '显卡监控SaaS订阅',
+                    description: '实时监控RTX 4090/4080/4070 Ti Super价格，降价立即通知',
+                    price: 500, // $5.00 in cents
+                    currency: 'cad',
+                    interval: 'month',
+                    features: [
+                        '实时价格监控',
+                        '降价即时通知',
+                        '历史价格分析',
+                        '多平台比价',
+                        '7x24小时服务'
+                    ]
+                },
+                {
+                    key: 'ai_arbitrage_report',
+                    name: 'AI套利深度报告',
+                    description: '每周AI模型套利机会深度分析报告',
+                    price: 1000, // $10.00 in cents
+                    currency: 'cad',
+                    interval: 'one_time',
+                    features: [
+                        '每周套利机会分析',
+                        '模型价格趋势预测',
+                        '风险收益评估',
+                        '执行策略建议',
+                        '独家数据洞察'
+                    ]
+                },
+                {
+                    key: 'code_bounty_service',
+                    name: '代码赏金服务',
+                    description: '自动化代码赏金发现与执行服务',
+                    price: 1000, // $10.00 in cents
+                    currency: 'cad',
+                    interval: 'month',
+                    features: [
+                        '自动化赏金扫描',
+                        '机会评估与筛选',
+                        '代码提交自动化',
+                        '支付状态追踪',
+                        '收益最大化策略'
+                    ]
+                }
+            ];
+        }
+        
+        // Render products
+        function renderProducts(products) {
+            const container = document.getElementById('products-container');
+            container.innerHTML = '';
+            
+            products.forEach(product => {
+                const price = (product.price / 100).toFixed(2);
+                const intervalText = product.interval === 'month' ? '/月' : '一次性';
+                
+                const productCard = document.createElement('div');
+                productCard.className = 'col-md-4';
+                productCard.innerHTML = `
+                    <div class="card product-card h-100 p-4" data-product-key="${product.key}">
+                        ${product.interval === 'month' ? '<span class="status-badge status-active">订阅</span>' : ''}
+                        <div class="card-body text-center">
+                            <h4 class="card-title mb-3">${product.name}</h4>
+                            <p class="card-text text-muted mb-4">${product.description}</p>
+                            
+                            <div class="price mb-3">
+                                <span class="currency">$</span>${price}
+                                <small class="text-muted">${intervalText}</small>
+                            </div>
+                            
+                            <ul class="feature-list list-unstyled text-start mb-4">
+                                ${product.features.map(feature => `<li>✓ ${feature}</li>`).join('')}
+                            </ul>
+                            
+                            <button class="btn btn-outline-primary w-100 select-product-btn">
+                                选择此产品
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(productCard);
+            });
+            
+            // Add click listeners to product cards
+            document.querySelectorAll('.product-card').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    if (!e.target.closest('.select-product-btn')) return;
+                    
+                    const productKey = this.dataset.productKey;
+                    selectProduct(productKey, products);
+                });
+            });
+        }
+        
+        // Select product
+        function selectProduct(productKey, products) {
+            selectedProduct = products.find(p => p.key === productKey);
+            
+            if (!selectedProduct) {
+                alert('产品选择失败，请刷新页面重试');
+                return;
+            }
+            
+            // Update UI
+            document.querySelectorAll('.product-card').forEach(card => {
+                card.classList.remove('selected');
+                if (card.dataset.productKey === productKey) {
+                    card.classList.add('selected');
+                }
+            });
+            
+            // Show payment form
+            document.getElementById('products-container').style.display = 'none';
+            document.getElementById('payment-form').style.display = 'block';
+            
+            // Update selected product info
+            const price = (selectedProduct.price / 100).toFixed(2);
+            const intervalText = selectedProduct.interval === 'month' ? '/月' : '一次性';
+            
+            document.getElementById('selected-product-info').innerHTML = `
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>${selectedProduct.name}</strong><br>
+                        <small class="text-muted">${selectedProduct.description}</small>
+                    </div>
+                    <div class="text-end">
+                        <span class="h4 mb-0">$${price}</span>
+                        <small class="text-muted d-block">${intervalText}</small>
+                    </div>
+                </div>
+            `;
+            
+            // Scroll to payment form
+            document.getElementById('payment-form').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            // Back button
+            document.getElementById('back-button').addEventListener('click', function() {
+                document.getElementById('products-container').style.display = 'flex';
+                document.getElementById('payment-form').style.display = 'none';
+                selectedProduct = null;
+                
+                document.querySelectorAll('.product-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+            });
+            
+            // Pay button
+            document.getElementById('pay-button').addEventListener('click', processPayment);
+            
+            // New payment button
+            document.getElementById('new-payment-button').addEventListener('click', function() {
+                document.getElementById('payment-success').style.display = 'none';
+                document.getElementById('products-container').style.display = 'flex';
+                document.getElementById('payment-form').style.display = 'none';
+                selectedProduct = null;
+                
+                document.querySelectorAll('.product-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+                
+                // Clear email
+                document.getElementById('email').value = '';
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+        
+        // Process payment
+        async function processPayment() {
+            const email = document.getElementById('email').value.trim();
+            
+            // Validate email
+            if (!email || !isValidEmail(email)) {
+                alert('请输入有效的邮箱地址');
+                return;
+            }
+            
+            if (!selectedProduct) {
+                alert('请先选择产品');
+                return;
+            }
+            
+            // Show loading
+            document.getElementById('pay-text').style.display = 'none';
+            document.getElementById('pay-loading').classList.add('active');
+            document.getElementById('pay-button').disabled = true;
+            
+            try {
+                // Create payment session
+                const response = await fetch(`${API_BASE_URL}/api/create-payment-session`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-API-Key': API_KEY
+                    },
+                    body: JSON.stringify({
+                        product_key: selectedProduct.key,
+                        customer_email: email,
+                        success_url: window.location.href + '?success=true',
+                        cancel_url: window.location.href
+                    })
+                });
+                
+                if (!response.ok) {
+                    const error = await response.text();
+                    throw new Error(`支付会话创建失败: ${error}`);
+                }
+                
+                const session = await response.json();
+                
+                // Initialize Stripe
+                if (!stripe) {
+                    stripe = Stripe('pk_live_6Jl8aCtCq5NveJmoN4liQMnh00TlXhlHWs');
+                }
+                
+                // Redirect to Stripe Checkout
+                const { error } = await stripe.redirectToCheckout({
+                    sessionId: session.id
+                });
+                
+                if (error) {
+                    throw new Error(`Stripe重定向失败: ${error.message}`);
+                }
+                
+            } catch (error) {
+                console.error('Payment error:', error);
+                alert(`支付处理失败: ${error.message}`);
+                
+                // Reset UI
+                document.getElementById('pay-text').style.display = 'inline';
+                document.getElementById('pay-loading').classList.remove('active');
+                document.getElementById('pay-button').disabled = false;
+            }
+        }
+        
+        // Email validation
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+        
+        // Check for success parameter
+        function checkSuccessParameter() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('success') === 'true') {
+                // Show success message
+                document.getElementById('products-container').style.display = 'none';
+                document.getElementById('payment-form').style.display = 'none';
+                document.getElementById('payment-success').style.display = 'block';
+                
+                // Clear URL parameters
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        }
+        
+        // Check on load
+        checkSuccessParameter();
+    </script>
+</body>
+</html>
