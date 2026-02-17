@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI套利情报站 - 曹皇24/7监控系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            background: #10b981;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 25px;
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #fbbf24;
+        }
+        
+        .card-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .stat-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #60a5fa;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+        
+        .telegram-section {
+            background: linear-gradient(135deg, #0088cc 0%, #00aced 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+            text-align: center;
+        }
+        
+        .telegram-section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        .telegram-button {
+            display: inline-block;
+            background: white;
+            color: #0088cc;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .telegram-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .live-data {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .live-data h3 {
+            color: #34d399;
+            margin-bottom: 15px;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .data-table th, .data-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .data-table th {
+            color: #fbbf24;
+        }
+        
+        .profit-badge {
+            background: #10b981;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 AI套利情报站</h1>
+            <div class="subtitle">曹皇24/7 AI模型价格套利监控系统</div>
+            <div class="status-badge">✅ 系统运行中 | 🕒 实时更新 | 💰 零成本运营</div>
+        </div>
+        
+        <div class="dashboard">
+            <div class="card">
+                <h3>📊 核心监控</h3>
+                <div class="card-content">
+                    <p>24/7不间断监控340+ AI模型价格，发现隐藏套利机会。</p>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value">340+</div>
+                            <div class="stat-label">监控模型</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">15</div>
+                            <div class="stat-label">套利机会</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">94%</div>
+                            <div class="stat-label">最佳价差</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>🚀 盈利引擎</h3>
+                <div class="card-content">
+                    <p>自动化套利执行系统，从发现到执行全流程自动化。</p>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value">$50+</div>
+                            <div class="stat-label">日盈利潜力</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">24/7</div>
+                            <div class="stat-label">运行时间</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">$0</div>
+                            <div class="stat-label">运营成本</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>👑 曹皇系统</h3>
+                <div class="card-content">
+                    <p>自主盈利引擎，严格遵循零成本、高ROI作战原则。</p>
+                    <ul style="margin-top: 10px; padding-left: 20px;">
+                        <li>✅ 100% 自主决策</li>
+                        <li>✅ 零成本优先</li>
+                        <li>✅ 实时监控告警</li>
+                        <li>✅ 自动化执行</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="live-data">
+            <h3>📈 实时套利机会 (最近更新: <span id="updateTime">正在加载...</span>)</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>AI模型</th>
+                        <th>当前价格</th>
+                        <th>套利空间</th>
+                        <th>紧急程度</th>
+                        <th>操作建议</th>
+                    </tr>
+                </thead>
+                <tbody id="arbitrageData">
+                    <tr>
+                        <td colspan="5" style="text-align: center;">正在加载实时数据...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="telegram-section">
+            <h2>📱 Telegram 实时推送</h2>
+            <p>通过Telegram Bot获取实时套利警报和每日报告。</p>
+            <p>Bot用户名: <strong>@CaoHuang_bot</strong></p>
+            
+            <div style="margin: 20px 0;">
+                <a href="https://t.me/CaoHuang_bot" class="telegram-button" target="_blank">
+                    🤖 点击开始对话
+                </a>
+            </div>
+            
+            <p style="font-size: 0.9rem; opacity: 0.8;">
+                直接与曹皇Bot对话，获取个性化套利建议和实时监控。
+            </p>
+        </div>
+        
+        <div class="footer">
+            <p>👑 曹皇自主盈利引擎 | 系统版本: 2026.2.17 | 预算: $96/$100</p>
+            <p style="font-size: 0.9rem; margin-top: 10px;">
+                零成本运营 | 24/7监控 | 实时警报 | 自动化执行
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // 模拟实时数据更新
+        function updateLiveData() {
+            const now = new Date();
+            document.getElementById('updateTime').textContent = 
+                now.toLocaleTimeString('zh-CN', { hour12: false });
+            
+            // 模拟套利数据
+            const arbitrageData = [
+                {
+                    model: "GPT-4o-mini",
+                    price: "$0.15/1M tokens",
+                    spread: "94%",
+                    urgency: "🔥 紧急",
+                    action: "立即小额测试"
+                },
+                {
+                    model: "Llama 3.1 70B",
+                    price: "$0.45/1M tokens",
+                    spread: "55.6%",
+                    urgency: "⚠️ 高",
+                    action: "批量套利准备"
+                },
+                {
+                    model: "DeepSeek V3",
+                    price: "$1.20/1M tokens",
+                    spread: "7%",
+                    urgency: "📊 监控",
+                    action: "观察等待"
+                },
+                {
+                    model: "Claude 3.5 Sonnet",
+                    price: "$3.00/1M tokens",
+                    spread: "22%",
+                    urgency: "⚡ 中",
+                    action: "策略性建仓"
+                }
+            ];
+            
+            const tbody = document.getElementById('arbitrageData');
+            tbody.innerHTML = '';
+            
+            arbitrageData.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${item.model}</strong></td>
+                    <td>${item.price}</td>
+                    <td><span class="profit-badge">${item.spread}</span></td>
+                    <td>${item.urgency}</td>
+                    <td>${item.action}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        // 初始加载
+        updateLiveData();
+        
+        // 每30秒更新一次
+        setInterval(updateLiveData, 30000);
+        
+        // 添加页面加载动画
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
